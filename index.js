@@ -39,9 +39,12 @@ var Init = {
           if (r.statusCode == 404) {
             return reject(new Error("Example '" + name + "' doesn't exist. If you believe this is an error, please contact Truffle support."));
           } else if (r.statusCode != 200) {
-            return reject(new Error("Error connecting to github.com. Please check your internet connection and try again."));
+            return reject(new Error("Error connecting to github.com. Please try again later."));
           }
           accept();
+        });
+        req.on('error', function(err) {
+          return reject(new Error("Error connecting to github.com. Please check your internet connection and try again."));
         });
         req.end();
 
